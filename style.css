@@ -1,0 +1,57 @@
+body {
+  max-width: 100%;
+  background-color: #ece2d7;
+  font-family: 'Cabin', sans-serif, georgia;
+  color: #57200b;
+}
+
+/*header*/
+
+.navBar {
+  width: 100%;
+  height: 5%;
+  text-align: center;
+}
+
+.navBar a {
+  font-size: 24px;
+  margin: 30px;
+  text-decoration: none;
+  color: #57200b;
+}
+
+#active-link {
+  color: #c05723;
+}
+
+/*start of home screen*/
+#title{
+  color: #c05723;
+  text-align: center;
+}
+
+#logo{
+  max-width: 30%;
+  height: auto;
+  margin: auto;
+  display: block;
+  margin-top: 40px;
+}
+
+.full-width-textbox{
+  margin: auto;
+  margin-top: 40px;
+  background-color: #DDBDA0;
+  width: 75%;
+  height: 75%;
+
+}
+
+
+
+/**
+#c05723 - orange
+#57200b - brown
+#cb9f5e - in between
+#DDBDA0 - contrast background
+**/
