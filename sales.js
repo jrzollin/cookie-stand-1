@@ -54,7 +54,7 @@ function Store (name, minCust, maxCust, avgCookies){
   this.maxCust = maxCust;
   this.avgCookies = avgCookies;
   this.hourlyTotals = [], //set up an empty array so i can push the hourly totals to it later
-  this.cookieTotal = 0,  //this doesn't need to be here but i'm using as a reminder/placeholder. th value is changed later
+  this.cookieTotal = 0,  //this doesn't need to be here but i'm using as a reminder/placeholder. the value is changed later
   this.hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
   this.randomCust = function(){
@@ -81,7 +81,6 @@ function Store (name, minCust, maxCust, avgCookies){
 
   //DOM that shtuff to HTML
   this.print = function(){
-    //adding in a <tr> so i can add the corresponding stores data
     var tableBody = document.getElementById('table-body'); //grabbed the <tbody> element
     var tableBodyRow = document.createElement('tr');  //created a <tr> to append stuff to in my loop
     tableBody.appendChild(tableBodyRow);
@@ -104,6 +103,7 @@ function Store (name, minCust, maxCust, avgCookies){
     tableBodyRow.appendChild(dailyTotal);
   };
 
+  //my helper function to run everything
   this.magic = function(){
     this.hourlyCookies();
     this.print();
