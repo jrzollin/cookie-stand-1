@@ -28,22 +28,16 @@ function tableScaffold(index){
   tableHeader.appendChild(tableHeaderRow);
 
   //created an empty <th> so first cell in thead row is empty for formatting
-  var thPlaceHolder = document.createElement('th');
-  thPlaceHolder.textContent = '';
-  tableHeaderRow.appendChild(thPlaceHolder);
-  // tableHeaderRow.innerHTML = '<th></th>';
+  tableHeaderRow.innerHTML += '<th> </th>';
 
   //properly labeling top row of tableHeaderRow
   for (var i = 0; i < hoursOpen.length; i++) {
-    var tableTitle = document.createElement('th');
-    tableTitle.textContent = hoursOpen[i];
-    tableHeaderRow.appendChild(tableTitle);
+    tableHeaderRow.innerHTML += '<th>' + hoursOpen[i] + '</th>';
+    console.log(tableHeaderRow.innerHTML + i);
   }
 
   //making last column title say Daily Allocation Total
-  var thTotal = document.createElement('th');
-  thTotal.textContent = 'Daily Allocation Total';
-  tableHeaderRow.appendChild(thTotal);
+  tableHeaderRow.innerHTML += '<th>Daily Allocation Total</th>';
 };
 
 //Making my Constructor Function
@@ -76,7 +70,7 @@ function Store (name, minCust, maxCust, avgCookies){
     //console.log(sum);
   };
 
-  //stretch goal table work
+  //stretch goal table math
   this.cookieTossers = function(){
     for (var i = 0; i < this.hourlyTotals.length; i++) {
       var tossers = Math.ceil(this.hourlyTotals[i] / 2);
@@ -92,26 +86,21 @@ function Store (name, minCust, maxCust, avgCookies){
 
   //DOM that shtuff to HTML
   this.print = function(){
-    var tableBody = document.getElementsByClassName('table-body')[0]; //grabbed the <tbody> element
-    var tableBodyRow = document.createElement('tr');  //created a <tr> to append stuff to in my loop
+    //created a new <tr> and appended to <tbdoy> || grabbed the [0] index since i got multiple elements by Class Name
+    var tableBody = document.getElementsByClassName('table-body')[0];
+    var tableBodyRow = document.createElement('tr');
     tableBody.appendChild(tableBodyRow);
 
     //setting up the proper store locaton name as a <th> to start each row
-    var rowHeader = document.createElement('th');
-    rowHeader.textContent = this.name;
-    tableBodyRow.appendChild(rowHeader);
+    tableBodyRow.innerHTML += '<th>' + this.name + '</th>';
 
     //looping through hourlyTotals array to add each hourly total
     for (var i = 0; i < this.hourlyTotals.length; i++) {
-      var tableData = document.createElement('td');
-      tableData.textContent = this.hourlyTotals[i];
-      tableBodyRow.appendChild(tableData);
+      tableBodyRow.innerHTML += '<th>' + this.hourlyTotals[i] + '</th>';
     }
 
     //adding in the total cookie value for each store
-    var dailyTotal = document.createElement('th');
-    dailyTotal.textContent = this.cookieTotal;
-    tableBodyRow.appendChild(dailyTotal);
+    tableBodyRow.innerHTML += '<th>' + this.cookieTotal + '</th>';
   };
 
   this.printTossers = function(){
