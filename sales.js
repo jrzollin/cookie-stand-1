@@ -1,11 +1,11 @@
 'use strict';
 
 //Creating Each Store
-var pike = new Store('1st and Pike', 23, 65, 6.3);
-var seaTac = new Store('SeaTac Airport', 3, 24, 1.2);
-var seattleCenter = new Store('Seattle Center', 11, 38, 3.7);
-var capitolHill = new Store('Capitol Hill', 3, 24, 1.2);
-var alki = new Store('Alki', 3, 24, 1.2);
+var pike = new Store('1st and Pike', 'pike', 23, 65, 6.3);
+var seaTac = new Store('SeaTac Airport', 'seaTac', 3, 24, 1.2);
+var seattleCenter = new Store('Seattle Center', 'seaCenter', 11, 38, 3.7);
+var capitolHill = new Store('Capitol Hill', 'capHill', 3, 24, 1.2);
+var alki = new Store('Alki', 'alki', 3, 24, 1.2);
 
 var patsStores = [pike, seaTac, seattleCenter, capitolHill, alki];
 
@@ -19,7 +19,6 @@ for (var i = 0; i < patsStores.length; i++) {
 
 //function to set-up the one time table titles/scaffolding || the parameter (index) lets me pick which table I want to create later.
 function tableScaffold(index){
-  //created array below so I can set-up headings of table
   var hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
   //first I set up the table header row with proper titles
@@ -33,16 +32,26 @@ function tableScaffold(index){
   //properly labeling top row of tableHeaderRow
   for (var i = 0; i < hoursOpen.length; i++) {
     tableHeaderRow.innerHTML += '<th>' + hoursOpen[i] + '</th>';
-    console.log(tableHeaderRow.innerHTML + i);
   }
 
   //making last column title say Daily Allocation Total
   tableHeaderRow.innerHTML += '<th>Daily Allocation Total</th>';
+
+  //now setting up the names of each store and giving them a class tag
+  var tableBody = document.getElementsByClassName('table-body')[index];
+  for (var i = 0; i < patsStores.length; i++) {
+    var tableBodyRow = document.createElement('tr');
+    tableBodyRow.setAttribute('class', patsStores[i].tag);
+    tableBody.appendChild(tableBodyRow);
+    tableBodyRow.innerHTML += '<th>' + patsStores[i].name + '</th>';
+    //console.log(tableBodyRow);  //checking to see if everything showed up correctly
+  };
 };
 
 //Making my Constructor Function
-function Store (name, minCust, maxCust, avgCookies){
+function Store (name, tag, minCust, maxCust, avgCookies){
   this.name = name;
+  this.tag = tag;
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgCookies = avgCookies;
@@ -70,7 +79,7 @@ function Store (name, minCust, maxCust, avgCookies){
     //console.log(sum);
   };
 
-  //stretch goal table math
+  //stretch goal math
   this.cookieTossers = function(){
     for (var i = 0; i < this.hourlyTotals.length; i++) {
       var tossers = Math.ceil(this.hourlyTotals[i] / 2);
@@ -84,44 +93,29 @@ function Store (name, minCust, maxCust, avgCookies){
     }
   };
 
-  //DOM that shtuff to HTML
+  //Printing stuff to the DOM
   this.print = function(){
-    //created a new <tr> and appended to <tbdoy> || grabbed the [0] index since i got multiple elements by Class Name
-    var tableBody = document.getElementsByClassName('table-body')[0];
-    var tableBodyRow = document.createElement('tr');
-    tableBody.appendChild(tableBodyRow);
+    //grab correct store's <tr> by id tag
+    var tableRow = document.getElementsByClassName(this.tag)[0];
+    //console.log(tableRow);
 
-    //setting up the proper store locaton name as a <th> to start each row
-    tableBodyRow.innerHTML += '<th>' + this.name + '</th>';
-
-    //looping through hourlyTotals array to add each hourly total
+    //adding hourly totals
     for (var i = 0; i < this.hourlyTotals.length; i++) {
-      tableBodyRow.innerHTML += '<th>' + this.hourlyTotals[i] + '</th>';
+      tableRow.innerHTML += '<td>' + this.hourlyTotals[i] + '</td>';
     }
-
-    //adding in the total cookie value for each store
-    tableBodyRow.innerHTML += '<th>' + this.cookieTotal + '</th>';
+    //adding Total for each store
+    tableRow.innerHTML += '<td>' + this.cookieTotal + '</td>';
   };
 
+  //Printing Stretch Goal Table
   this.printTossers = function(){
-    var tableBody = document.getElementsByClassName('table-body')[1];
-    var tableBodyRow = document.createElement('tr');
-    tableBody.appendChild(tableBodyRow);
-
-    var rowHeader = document.createElement('th');
-    rowHeader.textContent = this.name;
-    tableBodyRow.appendChild(rowHeader);
+    var tableRow = document.getElementsByClassName(this.tag)[1];
 
     for (var i = 0; i < this.tossers.length; i++) {
-      var tableData = document.createElement('td');
-      tableData.textContent = this.tossers[i];
-      tableBodyRow.appendChild(tableData);
+      tableRow.innerHTML += '<td>' + this.tossers[i] + '</td>';
     }
 
-    //adding in the total cookie value for each store
-    var dailyTotal = document.createElement('th');
-    dailyTotal.textContent = this.tossersTotal;
-    tableBodyRow.appendChild(dailyTotal);
+    tableRow.innerHTML += '<td>' + this.tossersTotal + '</td>';
   };
 
   //my helper function to run everything
