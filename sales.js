@@ -9,21 +9,21 @@ var alki = new Store('Alki', 3, 24, 1.2);
 
 var patsStores = [pike, seaTac, seattleCenter, capitolHill, alki];
 
-//caling table scaffold function
-tableScaffold();
-
+//caling table scaffold function | first time for regular table. second time for stretch goal
+tableScaffold(0);
+tableScaffold(1);
 //running code to make things print on my page
 for (var i = 0; i < patsStores.length; i++) {
   patsStores[i].magic();
 }
 
 //function to set-up the one time table titles/scaffolding
-function tableScaffold(){
+function tableScaffold(index){
   //created array below so I can set-up headings of table
   var hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
   //first I set up the table header row with proper titles
-  var tableHeader = document.getElementById('table-hours'); //grabbed the <thead> element from my html
+  var tableHeader = document.getElementsByClassName('table-hours')[index]; //grabbed the <thead> element from my html
   var tableHeaderRow = document.createElement('tr');  //created a <tr> so I could loop and append <td> to it
   tableHeader.appendChild(tableHeaderRow);
 
@@ -52,6 +52,8 @@ function Store (name, minCust, maxCust, avgCookies){
   this.maxCust = maxCust;
   this.avgCookies = avgCookies;
   this.hourlyTotals = [], //set up an empty array so i can push the hourly totals to it later
+  this.tossers = [], //just like above
+  this.tossersTotal = 0, //just like below
   this.cookieTotal = 0,  //this doesn't need to be here but i'm using as a reminder/placeholder. the value is changed later
   this.hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
@@ -73,13 +75,23 @@ function Store (name, minCust, maxCust, avgCookies){
     //console.log(sum);
   };
 
-  //this.hourlyCookies();
-  //console.log('Here are the hourly totals: ' + this.hourlyTotals);
-  //console.log('Here is the sum for all the cookies in one day: ' + this.cookieTotal);
+  //stretch goal table work
+  this.cookieTossers = function(){
+    for (var i = 0; i < this.hourlyTotals.length; i++) {
+      var tossers = Math.ceil(this.hourlyTotals[i] / 2);
+      if(tossers > 2){
+        this.tossers.push(tossers);
+        this.tossersTotal += tossers;
+      } else {
+        this.tossers.push(2);
+        this.tossersTotal += tossers;
+      }
+    }
+  };
 
   //DOM that shtuff to HTML
   this.print = function(){
-    var tableBody = document.getElementById('table-body'); //grabbed the <tbody> element
+    var tableBody = document.getElementsByClassName('table-body')[0]; //grabbed the <tbody> element
     var tableBodyRow = document.createElement('tr');  //created a <tr> to append stuff to in my loop
     tableBody.appendChild(tableBodyRow);
 
@@ -101,9 +113,32 @@ function Store (name, minCust, maxCust, avgCookies){
     tableBodyRow.appendChild(dailyTotal);
   };
 
+  this.printTossers = function(){
+    var tableBody = document.getElementsByClassName('table-body')[1];
+    var tableBodyRow = document.createElement('tr');
+    tableBody.appendChild(tableBodyRow);
+
+    var rowHeader = document.createElement('th');
+    rowHeader.textContent = this.name;
+    tableBodyRow.appendChild(rowHeader);
+
+    for (var i = 0; i < this.tossers.length; i++) {
+      var tableData = document.createElement('td');
+      tableData.textContent = this.tossers[i];
+      tableBodyRow.appendChild(tableData);
+    }
+
+    //adding in the total cookie value for each store
+    var dailyTotal = document.createElement('th');
+    dailyTotal.textContent = this.tossersTotal;
+    tableBodyRow.appendChild(dailyTotal);
+  };
+
   //my helper function to run everything
   this.magic = function(){
     this.hourlyCookies();
+    this.cookieTossers();
     this.print();
+    this.printTossers();
   };
 };
