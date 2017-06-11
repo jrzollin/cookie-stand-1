@@ -53,14 +53,19 @@ h1 {
 
 #textbox {
   width: 30%;
-  background-color: #DDBDA0;
   padding: 5px;
   margin-left: 65%;
-
 }
 
 #textbox h3 {
   color: #c05723;
+  margin-top: 75%;
+  font-size: 30px;
+}
+
+#textbox p {
+  color: #c05723;
+  font-size: 20px;
 }
 
 
