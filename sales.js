@@ -150,7 +150,7 @@ function hourlyTotals(){
     sum += patsStores[i].tossersTotal;
   }
 
-  //now printing totals to DOM
+  //now printing everything to the DOM
   var tableBody = document.getElementsByClassName('table-body')[1];
   var tableBodyRow = document.createElement('tr');
   tableBody.appendChild(tableBodyRow);
