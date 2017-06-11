@@ -9,28 +9,29 @@ var alki = new Store('Alki', 3, 24, 1.2);
 
 var patsStores = [pike, seaTac, seattleCenter, capitolHill, alki];
 
-//caling table scaffold function | first time for regular table. second time for stretch goal
+//caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);
 tableScaffold(1);
-//running code to make things print on my page
+//looping through my array of stores to make everything print to page
 for (var i = 0; i < patsStores.length; i++) {
   patsStores[i].magic();
 }
 
-//function to set-up the one time table titles/scaffolding
+//function to set-up the one time table titles/scaffolding || the parameter (index) lets me pick which table I want to create later.
 function tableScaffold(index){
   //created array below so I can set-up headings of table
   var hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
   //first I set up the table header row with proper titles
-  var tableHeader = document.getElementsByClassName('table-hours')[index]; //grabbed the <thead> element from my html
-  var tableHeaderRow = document.createElement('tr');  //created a <tr> so I could loop and append <td> to it
+  var tableHeader = document.getElementsByClassName('table-hours')[index];
+  var tableHeaderRow = document.createElement('tr');
   tableHeader.appendChild(tableHeaderRow);
 
   //created an empty <th> so first cell in thead row is empty for formatting
   var thPlaceHolder = document.createElement('th');
   thPlaceHolder.textContent = '';
   tableHeaderRow.appendChild(thPlaceHolder);
+  // tableHeaderRow.innerHTML = '<th></th>';
 
   //properly labeling top row of tableHeaderRow
   for (var i = 0; i < hoursOpen.length; i++) {
