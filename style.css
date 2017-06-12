@@ -14,7 +14,7 @@ body {
 }
 
 .navBar a {
-  font-size: 24px;
+  font-size: 20px;
   margin: 30px;
   text-decoration: none;
   color: #57200b;
@@ -24,29 +24,49 @@ body {
   color: #c05723;
 }
 
-/*start of home screen*/
-#title{
-  color: #c05723;
+/*title and logo*/
+h1 {
   text-align: center;
+  margin-top: 40px;
+  color: #c05723;
+  font-size: 48px;
+  letter-spacing: 2px;
 }
 
 #logo{
-  max-width: 30%;
+  max-width: 15%;
   height: auto;
   margin: auto;
   display: block;
   margin-top: 40px;
 }
 
-.full-width-textbox{
-  margin: auto;
-  margin-top: 40px;
-  background-color: #DDBDA0;
-  width: 75%;
-  height: 75%;
+/*page content starts*/
 
+.about-us{
+  width: 70%;
+  height:853px;
+  margin: auto;
+  background-image: url("images/coffeecookie.jpg");
+  background-repeat: no-repeat;
 }
 
+#textbox {
+  width: 30%;
+  padding: 5px;
+  margin-left: 65%;
+}
+
+#textbox h3 {
+  color: #c05723;
+  margin-top: 75%;
+  font-size: 30px;
+}
+
+#textbox p {
+  color: #c05723;
+  font-size: 20px;
+}
 
 
 /**
