@@ -18,7 +18,8 @@ for (var i = 0; i < patsStores.length; i++) {
   //hourlyTotals(patsStores[i]);
 }
 //calling function to make stretch goal column totals appear. Code at very bottom
-hourlyTotals();
+hourlyTotalsTossers();
+hourlyTotalsStores();
 
 //function to set-up the one time table titles/scaffolding || the parameter (index) lets me pick which table I want to create later.
 function tableScaffold(index){
@@ -130,8 +131,9 @@ function Store (name, tag, minCust, maxCust, avgCookies){
   };
 };
 
-//WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN IN STRETCH GOAL TABLE
-function hourlyTotals(){
+//WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
+//First the Stretch Goal Table
+function hourlyTotalsTossers(){
   var totals = pike.tossers;
   //console.log(totals);
   for (var i = 1; i < patsStores.length; i++) {
@@ -159,4 +161,23 @@ function hourlyTotals(){
     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
   tableBodyRow.innerHTML += '<th>' + sum + '</th>';
+};
+
+//copy + pasta for the other table
+function hourlyTotalsStores(){
+  var totals = pike.hourlyTotals;
+
+  for (var i = 1; i < patsStores.length; i++) {
+    for (var x = 0; x < 14; x++) {
+      totals[x] += patsStores[i].hourlyTotals[x];
+    }
+  }
+
+  var tableBody = document.getElementsByClassName('table-body')[0];
+  var tableBodyRow = document.createElement('tr');
+  tableBody.appendChild(tableBodyRow);
+  tableBodyRow.innerHTML += '<th>Totals</th>';
+  for (var i = 0; i < totals.length; i++) {
+    tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
+  }
 };
