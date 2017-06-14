@@ -12,11 +12,7 @@ var patsStores = [pike, seaTac, seattleCenter, capitolHill, alki];
 //caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);
 tableScaffold(1);
-//looping through my array of stores to make everything print to page
-for (var i = 0; i < patsStores.length; i++) {
-  patsStores[i].magic();
-  //hourlyTotals(patsStores[i]);
-}
+
 //calling function to make stretch goal column totals appear. Code at very bottom
 hourlyTotalsTossers();
 hourlyTotalsStores();
@@ -64,66 +60,67 @@ function Store (name, tag, minCust, maxCust, avgCookies){
   this.tossersTotal = 0, //just like below
   this.cookieTotal = 0,  //this doesn't need to be here but i'm using as a reminder/placeholder. the value is changed later
   this.hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
+};
 
-  this.hourlyCookies = function(){
-    var sum = 0; //create a variable to track the total cookie sum for the day that is used at the end of this function
-    for(var i = 0; i < 14 ; i++){
-      var randomNum = Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust;
-      var totalCookies = Math.ceil(randomNum * this.avgCookies);
-      //console.log('total cookies for hour' + i + ' is ' + totalCookies);
-      sum += totalCookies;
-      this.hourlyTotals.push(totalCookies);
+Store.prototype.hourlyCookies = function(){
+  var sum = 0; //create a variable to track the total cookie sum for the day that is used at the end of this function
+  for(var i = 0; i < 14 ; i++){
+    var randomNum = Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust;
+    var totalCookies = Math.ceil(randomNum * this.avgCookies);
+    //console.log('total cookies for hour' + i + ' is ' + totalCookies);
+    sum += totalCookies;
+    this.hourlyTotals.push(totalCookies);
+  }
+  this.cookieTotal = sum;
+  //console.log(sum);
+};
+alki.hourlyCookies();
+
+//stretch goal math
+Store.prototype.cookieTossers = function(){
+  for (var i = 0; i < this.hourlyTotals.length; i++) {
+    var tossers = Math.ceil(this.hourlyTotals[i] / 2);
+    if(tossers > 2){
+      this.tossers.push(tossers);
+      this.tossersTotal += tossers;
+    } else {
+      this.tossers.push(2);
+      this.tossersTotal += tossers;
     }
-    this.cookieTotal = sum;
-    //console.log(sum);
-  };
+  }
+};
 
-  //stretch goal math
-  this.cookieTossers = function(){
-    for (var i = 0; i < this.hourlyTotals.length; i++) {
-      var tossers = Math.ceil(this.hourlyTotals[i] / 2);
-      if(tossers > 2){
-        this.tossers.push(tossers);
-        this.tossersTotal += tossers;
-      } else {
-        this.tossers.push(2);
-        this.tossersTotal += tossers;
-      }
-    }
-  };
+//Printing stuff to the DOM
+Store.prototype.print = function(){
+  //grab correct store's <tr> by id tag
+  var tableRow = document.getElementsByClassName(this.tag)[0];
+  //console.log(tableRow);
 
-  //Printing stuff to the DOM
-  this.print = function(){
-    //grab correct store's <tr> by id tag
-    var tableRow = document.getElementsByClassName(this.tag)[0];
-    //console.log(tableRow);
+  //adding hourly totals
+  for (var i = 0; i < this.hourlyTotals.length; i++) {
+    tableRow.innerHTML += '<td>' + this.hourlyTotals[i] + '</td>';
+  }
+  //adding Total for each store
+  tableRow.innerHTML += '<th>' + this.cookieTotal + '</th>';
+};
 
-    //adding hourly totals
-    for (var i = 0; i < this.hourlyTotals.length; i++) {
-      tableRow.innerHTML += '<td>' + this.hourlyTotals[i] + '</td>';
-    }
-    //adding Total for each store
-    tableRow.innerHTML += '<th>' + this.cookieTotal + '</th>';
-  };
+//Printing Stretch Goal Table
+Store.prototype.printTossers = function(){
+  var tableRow = document.getElementsByClassName(this.tag)[1];
 
-  //Printing Stretch Goal Table
-  this.printTossers = function(){
-    var tableRow = document.getElementsByClassName(this.tag)[1];
+  for (var i = 0; i < this.tossers.length; i++) {
+    tableRow.innerHTML += '<td>' + this.tossers[i] + '</td>';
+  }
 
-    for (var i = 0; i < this.tossers.length; i++) {
-      tableRow.innerHTML += '<td>' + this.tossers[i] + '</td>';
-    }
+  tableRow.innerHTML += '<th>' + this.tossersTotal + '</th>';
+};
 
-    tableRow.innerHTML += '<th>' + this.tossersTotal + '</th>';
-  };
-
-  //my helper function to run everything
-  this.magic = function(){
-    this.hourlyCookies();
-    this.cookieTossers();
-    this.print();
-    this.printTossers();
-  };
+//my helper function to run everything
+Store.prototype.magic = function(){
+  this.hourlyCookies();
+  this.cookieTossers();
+  this.print();
+  this.printTossers();
 };
 
 //WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
@@ -131,7 +128,7 @@ function Store (name, tag, minCust, maxCust, avgCookies){
 function hourlyTotalsTossers(){
   var totals = pike.tossers;
   //console.log(totals);
-  for (var i = 1; i < patsStores.length; i++) {
+  for (var i = 0; i < patsStores.length; i++) {
     //console.log('this is ' + patsStores[i].name);
     for (var x = 0; x < 14; x++) {
       totals[x] += patsStores[i].tossers[x];
@@ -176,3 +173,8 @@ function hourlyTotalsStores(){
     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 };
+
+//looping through my array of stores to make everything print to page
+for (var i = 0; i < patsStores.length; i++) {
+  patsStores[i].magic();
+}
