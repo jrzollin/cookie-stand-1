@@ -65,16 +65,11 @@ function Store (name, tag, minCust, maxCust, avgCookies){
   this.cookieTotal = 0,  //this doesn't need to be here but i'm using as a reminder/placeholder. the value is changed later
   this.hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 
-  this.randomCust = function(){
-    return Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust;
-  };
-
   this.hourlyCookies = function(){
     var sum = 0; //create a variable to track the total cookie sum for the day that is used at the end of this function
     for(var i = 0; i < 14 ; i++){
-      var customer = this.randomCust(); //store new random customer for each hour
-      //console.log('random # of customers for hour ' + i + ' is ' + customer);
-      var totalCookies = Math.ceil(customer * this.avgCookies);
+      var randomNum = Math.floor(Math.random() * (this.maxCust - this.minCust + 1)) + this.minCust;
+      var totalCookies = Math.ceil(randomNum * this.avgCookies);
       //console.log('total cookies for hour' + i + ' is ' + totalCookies);
       sum += totalCookies;
       this.hourlyTotals.push(totalCookies);
