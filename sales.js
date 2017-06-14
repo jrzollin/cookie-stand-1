@@ -9,14 +9,6 @@ var alki = new Store('Alki', 'alki', 3, 24, 1.2);
 
 var patsStores = [pike, seaTac, seattleCenter, capitolHill, alki];
 
-//caling table scaffold function | first time for regular table. second time for stretch goal table
-tableScaffold(0);
-tableScaffold(1);
-
-//calling function to make stretch goal column totals appear. Code at very bottom
-hourlyTotalsTossers();
-hourlyTotalsStores();
-
 //function to set-up the one time table titles/scaffolding || the parameter (index) lets me pick which table I want to create later.
 function tableScaffold(index){
   var hoursOpen = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
@@ -74,7 +66,6 @@ Store.prototype.hourlyCookies = function(){
   this.cookieTotal = sum;
   //console.log(sum);
 };
-alki.hourlyCookies();
 
 //stretch goal math
 Store.prototype.cookieTossers = function(){
@@ -123,58 +114,64 @@ Store.prototype.magic = function(){
   this.printTossers();
 };
 
-//WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
-//First the Stretch Goal Table
-function hourlyTotalsTossers(){
-  var totals = pike.tossers;
-  //console.log(totals);
-  for (var i = 0; i < patsStores.length; i++) {
-    //console.log('this is ' + patsStores[i].name);
-    for (var x = 0; x < 14; x++) {
-      totals[x] += patsStores[i].tossers[x];
-      //var poop = patsStores[i].tossers[x];
-      //console.log(poop);
-    }
-  }
-  //console.log(totals);
+// //WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
+// //First the Stretch Goal Table
+// function hourlyTotalsTossers(){
+//   var totals = [];
+//   //console.log(totals);
+//   for (var i = 0; i < patsStores.length; i++) {
+//     //console.log('this is ' + patsStores[i].name);
+//     for (var i = 0; i < this.hourlyTotals.length; i++) {
+//       console.log(this.hourlyTotals);
+//     }
+//   }
+//   //console.log(totals);
+//
+//   //calculating a grand total of all workers needed for a day
+//   var sum = 0;
+//   for (var i = 0; i < patsStores.length; i++) {
+//     sum += patsStores[i].tossersTotal;
+//   }
+//
+//   //now printing everything to the DOM
+//   var tableBody = document.getElementsByClassName('table-body')[1];
+//   var tableBodyRow = document.createElement('tr');
+//   tableBody.appendChild(tableBodyRow);
+//   tableBodyRow.innerHTML += '<th>Totals</th>';
+//   for (var i = 0; i < totals.length; i++) {
+//     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
+//   }
+//   tableBodyRow.innerHTML += '<th>' + sum + '</th>';
+// };
+//
+// //copy + pasta for the other table
+// function hourlyTotalsStores(){
+//   var totals = pike.hourlyTotals;
+//
+//   for (var i = 1; i < patsStores.length; i++) {
+//     for (var x = 0; x < 14; x++) {
+//       totals[x] += patsStores[i].hourlyTotals[x];
+//     }
+//   }
+//
+//   var tableBody = document.getElementsByClassName('table-body')[0];
+//   var tableBodyRow = document.createElement('tr');
+//   tableBody.appendChild(tableBodyRow);
+//   tableBodyRow.innerHTML += '<th>Totals</th>';
+//   for (var i = 0; i < totals.length; i++) {
+//     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
+//   }
+// };
 
-  //calculating a grand total of all workers needed for a day
-  var sum = 0;
-  for (var i = 0; i < patsStores.length; i++) {
-    sum += patsStores[i].tossersTotal;
-  }
+//caling table scaffold function | first time for regular table. second time for stretch goal table
+tableScaffold(0);
+tableScaffold(1);
 
-  //now printing everything to the DOM
-  var tableBody = document.getElementsByClassName('table-body')[1];
-  var tableBodyRow = document.createElement('tr');
-  tableBody.appendChild(tableBodyRow);
-  tableBodyRow.innerHTML += '<th>Totals</th>';
-  for (var i = 0; i < totals.length; i++) {
-    tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
-  }
-  tableBodyRow.innerHTML += '<th>' + sum + '</th>';
-};
-
-//copy + pasta for the other table
-function hourlyTotalsStores(){
-  var totals = pike.hourlyTotals;
-
-  for (var i = 1; i < patsStores.length; i++) {
-    for (var x = 0; x < 14; x++) {
-      totals[x] += patsStores[i].hourlyTotals[x];
-    }
-  }
-
-  var tableBody = document.getElementsByClassName('table-body')[0];
-  var tableBodyRow = document.createElement('tr');
-  tableBody.appendChild(tableBodyRow);
-  tableBodyRow.innerHTML += '<th>Totals</th>';
-  for (var i = 0; i < totals.length; i++) {
-    tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
-  }
-};
-
+//calling function to make stretch goal column totals appear. Code at very bottom
+// hourlyTotalsTossers();
+//hourlyTotalsStores();
 //looping through my array of stores to make everything print to page
 for (var i = 0; i < patsStores.length; i++) {
   patsStores[i].magic();
+//  patsStores[i].hourlyTotalsTossers();
 }
