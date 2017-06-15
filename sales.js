@@ -114,21 +114,36 @@ Store.prototype.magic = function(){
   this.printTossers();
 };
 
-// //WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
-// //First the Stretch Goal Table
+//WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
+//First Table for the Top Table
 function hourlyCookieTotals(store){
   var totals = [];
   for (var i = 0; i < 14; i++){
-    var hourTotal = totals[i];
-    hourTotal = 0;
+    totals[i] = 0;
     for (var j = 0; j < patsStores.length; j++) {
-      var num = patsStores[j].hourlyTotals[i];
-      hourTotal += num;
+      totals[i] += patsStores[j].hourlyTotals[i];
     }
-    totals[i] = hourTotal;
   }
 
   var tableBody = document.getElementsByClassName('table-body')[0];
+  var totalsRow = document.createElement('tr');
+  totalsRow.innerHTML += '<th> Hourly Total </th>';
+  tableBody.appendChild(totalsRow);
+  for (var i = 0; i < totals.length; i++) {
+    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+  }
+}
+//For the Second Table
+function hourlyTossersTotals(store){
+  var totals = [];
+  for (var i = 0; i < 14; i++){
+    totals[i] = 0;
+    for (var j = 0; j < patsStores.length; j++) {
+      totals[i] += patsStores[j].tossers[i];
+    }
+  }
+
+  var tableBody = document.getElementsByClassName('table-body')[1];
   var totalsRow = document.createElement('tr');
   totalsRow.innerHTML += '<th> Hourly Total </th>';
   tableBody.appendChild(totalsRow);
@@ -147,3 +162,4 @@ for (var i = 0; i < patsStores.length; i++) {
 //  patsStores[i].hourlyTotalsTossers();
 }
 hourlyCookieTotals(patsStores);
+hourlyTossersTotals(patsStores);
