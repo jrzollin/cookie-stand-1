@@ -116,62 +116,34 @@ Store.prototype.magic = function(){
 
 // //WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
 // //First the Stretch Goal Table
-// function hourlyTotalsTossers(){
-//   var totals = [];
-//   //console.log(totals);
-//   for (var i = 0; i < patsStores.length; i++) {
-//     //console.log('this is ' + patsStores[i].name);
-//     for (var i = 0; i < this.hourlyTotals.length; i++) {
-//       console.log(this.hourlyTotals);
-//     }
-//   }
-//   //console.log(totals);
-//
-//   //calculating a grand total of all workers needed for a day
-//   var sum = 0;
-//   for (var i = 0; i < patsStores.length; i++) {
-//     sum += patsStores[i].tossersTotal;
-//   }
-//
-//   //now printing everything to the DOM
-//   var tableBody = document.getElementsByClassName('table-body')[1];
-//   var tableBodyRow = document.createElement('tr');
-//   tableBody.appendChild(tableBodyRow);
-//   tableBodyRow.innerHTML += '<th>Totals</th>';
-//   for (var i = 0; i < totals.length; i++) {
-//     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
-//   }
-//   tableBodyRow.innerHTML += '<th>' + sum + '</th>';
-// };
-//
-// //copy + pasta for the other table
-// function hourlyTotalsStores(){
-//   var totals = pike.hourlyTotals;
-//
-//   for (var i = 1; i < patsStores.length; i++) {
-//     for (var x = 0; x < 14; x++) {
-//       totals[x] += patsStores[i].hourlyTotals[x];
-//     }
-//   }
-//
-//   var tableBody = document.getElementsByClassName('table-body')[0];
-//   var tableBodyRow = document.createElement('tr');
-//   tableBody.appendChild(tableBodyRow);
-//   tableBodyRow.innerHTML += '<th>Totals</th>';
-//   for (var i = 0; i < totals.length; i++) {
-//     tableBodyRow.innerHTML += '<th>' + totals[i] + '</th>';
-//   }
-// };
+function hourlyCookieTotals(store){
+  var totals = [];
+  for (var i = 0; i < 14; i++){
+    var hourTotal = totals[i];
+    hourTotal = 0;
+    for (var j = 0; j < patsStores.length; j++) {
+      var num = patsStores[j].hourlyTotals[i];
+      hourTotal += num;
+    }
+    totals[i] = hourTotal;
+  }
+
+  var tableBody = document.getElementsByClassName('table-body')[0];
+  var totalsRow = document.createElement('tr');
+  totalsRow.innerHTML += '<th> Hourly Total </th>';
+  tableBody.appendChild(totalsRow);
+  for (var i = 0; i < totals.length; i++) {
+    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+  }
+}
 
 //caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);
 tableScaffold(1);
 
-//calling function to make stretch goal column totals appear. Code at very bottom
-// hourlyTotalsTossers();
-//hourlyTotalsStores();
 //looping through my array of stores to make everything print to page
 for (var i = 0; i < patsStores.length; i++) {
   patsStores[i].magic();
 //  patsStores[i].hourlyTotalsTossers();
 }
+hourlyCookieTotals(patsStores);
