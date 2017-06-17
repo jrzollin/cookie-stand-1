@@ -125,12 +125,13 @@ function hourlyCookieTotals(store){
     }
   }
 
-  var tableBody = document.getElementsByClassName('table-body')[0];
-  var totalsRow = document.createElement('tr');
-  totalsRow.innerHTML += '<th> Hourly Total </th>';
-  tableBody.appendChild(totalsRow);
+  //making last column title say Daily Allocation Total
+  var tableFoot = document.getElementsByClassName('table-foot')[0];
+  var tableFootRow = document.createElement('tr');
+  tableFoot.appendChild(tableFootRow);
+  tableFootRow.innerHTML += '<th>Daily Total</th>';
   for (var i = 0; i < totals.length; i++) {
-    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+    tableFootRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 }
 //For the Second Table
@@ -143,12 +144,13 @@ function hourlyTossersTotals(store){
     }
   }
 
-  var tableBody = document.getElementsByClassName('table-body')[1];
-  var totalsRow = document.createElement('tr');
-  totalsRow.innerHTML += '<th> Hourly Total </th>';
-  tableBody.appendChild(totalsRow);
+  //making last column title say Daily Allocation Total
+  var tableFoot = document.getElementsByClassName('table-foot')[1];
+  var tableFootRow = document.createElement('tr');
+  tableFoot.appendChild(tableFootRow);
+  tableFootRow.innerHTML += '<th>Daily Total</th>';
   for (var i = 0; i < totals.length; i++) {
-    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+    tableFootRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 }
 
@@ -167,23 +169,20 @@ function handleSubmit(event){
   var newStore = new Store(storeName, storeTag, minCust, maxCust, avgCookies);
   addScaffold(newStore, 0);
   addScaffold(newStore, 1);
+  newStore.magic();
   //console.log(storeName);
 }
 
 function addScaffold(obj, index){
   //console.log(obj.name);
   var tableBody = document.getElementsByClassName('table-body')[index];
-    var tableBodyRow = document.createElement('tr');
-    tableBodyRow.setAttribute('class', obj.tag);
-    tableBody.appendChild(tableBodyRow);
-    tableBodyRow.innerHTML += '<th>' + obj.name + '</th>';
+  console.log(tableBody);
+  var tableBodyRow = document.createElement('tr');
+  tableBodyRow.setAttribute('class', obj.tag);
+  console.log(tableBodyRow);
+  tableBody.appendChild(tableBodyRow);
+  tableBodyRow.innerHTML += '<th>' + obj.name + '</th>';
  }
-
- //making last column title say Daily Allocation Total
- // var tableFoot = document.getElementsByClassName('table-foot')[index];
- // var tableFootRow = document.createElement('tr');
- // tableFoot.appendChild(tableFootRow);
- // tableFootRow.innerHTML += '<th>Daily Total</th>';
 
 //caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);
