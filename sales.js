@@ -70,7 +70,7 @@ Store.prototype.hourlyCookies = function(){
 //stretch goal math
 Store.prototype.cookieTossers = function(){
   for (var i = 0; i < this.hourlyTotals.length; i++) {
-    var tossers = Math.ceil(this.hourlyTotals[i] / 2);
+    var tossers = Math.ceil(this.hourlyTotals[i] / 20);
     if(tossers > 2){
       this.tossers.push(tossers);
       this.tossersTotal += tossers;
@@ -117,6 +117,13 @@ Store.prototype.magic = function(){
 //WORK FOR STRETCH GOAL || SUM FOR EACH COLUMN TABLES
 //First Table for the Top Table
 function hourlyCookieTotals(store){
+  var tableFoot = document.getElementsByClassName('table-foot')[0];
+  if(tableFoot.hasChildNodes()){
+    // var child = tableFootRow;
+    // var parent = child.parentNode;
+    // parent.removeChild(child);
+    tableFoot.removeChild(tableFoot.childNodes[0]);
+  }
   var totals = [];
   for (var i = 0; i < 14; i++){
     totals[i] = 0;
@@ -125,16 +132,25 @@ function hourlyCookieTotals(store){
     }
   }
 
-  var tableBody = document.getElementsByClassName('table-body')[0];
-  var totalsRow = document.createElement('tr');
-  totalsRow.innerHTML += '<th> Hourly Total </th>';
-  tableBody.appendChild(totalsRow);
+  //making last column title say Daily Allocation Total
+
+  var tableFootRow = document.createElement('tr');
+  tableFoot.appendChild(tableFootRow);
+  tableFootRow.innerHTML += '<th>Daily Total</th>';
   for (var i = 0; i < totals.length; i++) {
-    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+    tableFootRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 }
 //For the Second Table
 function hourlyTossersTotals(store){
+  var tableFoot = document.getElementsByClassName('table-foot')[1];
+  if(tableFoot.hasChildNodes()){
+    // var child = tableFootRow;
+    // var parent = child.parentNode;
+    // parent.removeChild(child);
+    tableFoot.removeChild(tableFoot.childNodes[0]);
+  }
+
   var totals = [];
   for (var i = 0; i < 14; i++){
     totals[i] = 0;
@@ -143,14 +159,49 @@ function hourlyTossersTotals(store){
     }
   }
 
-  var tableBody = document.getElementsByClassName('table-body')[1];
-  var totalsRow = document.createElement('tr');
-  totalsRow.innerHTML += '<th> Hourly Total </th>';
-  tableBody.appendChild(totalsRow);
+  //making last column title say Daily Allocation Total
+
+  console.log(tableFoot);
+  var tableFootRow = document.createElement('tr');
+  tableFoot.appendChild(tableFootRow);
+  tableFootRow.innerHTML += '<th>Daily Total</th>';
   for (var i = 0; i < totals.length; i++) {
-    totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
+    tableFootRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 }
+
+var formEl = document.getElementById('form');
+formEl.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event){
+  event.preventDefault();
+
+  var storeName = event.target.name.value;
+  var storeTag = event.target.tag.value;
+  var minCust = parseInt(event.target.minCust.value);
+  var maxCust = parseInt(event.target.maxCust.value);
+  var avgCookies = parseInt(event.target.avgCookies.value);
+
+  var newStore = new Store(storeName, storeTag, minCust, maxCust, avgCookies);
+  addScaffold(newStore, 0);
+  addScaffold(newStore, 1);
+  newStore.magic();
+  patsStores.push(newStore);
+  hourlyCookieTotals(patsStores);
+  hourlyTossersTotals(patsStores);
+  //console.log(storeName);
+}
+
+function addScaffold(obj, index){
+  //console.log(obj.name);
+  var tableBody = document.getElementsByClassName('table-body')[index];
+  console.log(tableBody);
+  var tableBodyRow = document.createElement('tr');
+  tableBodyRow.setAttribute('class', obj.tag);
+  console.log(tableBodyRow);
+  tableBody.appendChild(tableBodyRow);
+  tableBodyRow.innerHTML += '<th>' + obj.name + '</th>';
+ }
 
 //caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);
