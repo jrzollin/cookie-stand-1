@@ -70,7 +70,7 @@ Store.prototype.hourlyCookies = function(){
 //stretch goal math
 Store.prototype.cookieTossers = function(){
   for (var i = 0; i < this.hourlyTotals.length; i++) {
-    var tossers = Math.ceil(this.hourlyTotals[i] / 2);
+    var tossers = Math.ceil(this.hourlyTotals[i] / 20);
     if(tossers > 2){
       this.tossers.push(tossers);
       this.tossersTotal += tossers;
@@ -151,6 +151,39 @@ function hourlyTossersTotals(store){
     totalsRow.innerHTML += '<th>' + totals[i] + '</th>';
   }
 }
+
+var formEl = document.getElementById('form');
+formEl.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event){
+  event.preventDefault();
+
+  var storeName = event.target.name.value;
+  var storeTag = event.target.tag.value;
+  var minCust = parseInt(event.target.minCust.value);
+  var maxCust = parseInt(event.target.maxCust.value);
+  var avgCookies = parseInt(event.target.avgCookies.value);
+
+  var newStore = new Store(storeName, storeTag, minCust, maxCust, avgCookies);
+  addScaffold(newStore, 0);
+  addScaffold(newStore, 1);
+  //console.log(storeName);
+}
+
+function addScaffold(obj, index){
+  //console.log(obj.name);
+  var tableBody = document.getElementsByClassName('table-body')[index];
+    var tableBodyRow = document.createElement('tr');
+    tableBodyRow.setAttribute('class', obj.tag);
+    tableBody.appendChild(tableBodyRow);
+    tableBodyRow.innerHTML += '<th>' + obj.name + '</th>';
+ }
+
+ //making last column title say Daily Allocation Total
+ // var tableFoot = document.getElementsByClassName('table-foot')[index];
+ // var tableFootRow = document.createElement('tr');
+ // tableFoot.appendChild(tableFootRow);
+ // tableFootRow.innerHTML += '<th>Daily Total</th>';
 
 //caling table scaffold function | first time for regular table. second time for stretch goal table
 tableScaffold(0);

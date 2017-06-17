@@ -14,6 +14,8 @@
       </thead>
       <tbody class="table-body">
       </tbody>
+      <tfoot class="table-foot">
+      </tfoot>
     </table>
 
     <h1>Tossers Needed Hourly Per Location</h1>
@@ -22,7 +24,41 @@
       </thead>
       <tbody class="table-body">
       </tbody>
+      <tfoot class="table-foot">
+      </tfoot>
     </table>
+
+    <form id="form">
+      <fieldset>
+        <div>
+          <label for="name">Store Name: </label>
+          <input type="text" name="name" placeholder="Store Name" required>
+        </div>
+
+        <div>
+          <label for="tag">Store Abbreviation: </label>
+          <input type="text" name="tag" placeholder="Abbr" required>
+        </div>
+
+        <div>
+          <label for="minCust">Minimum Customers: </label>
+          <input type="number" name="minCust" placeholder="Min #" required>
+        </div>
+
+        <div>
+          <label for="maxCust">Maximum Customers: </label>
+          <input type="number" name="maxCust" placeholder="Max #" required>
+        </div>
+
+        <div>
+          <label for="avgCookies">Average Cookies: </label>
+          <input type="number" name="avgCookies" placeholder="Avg Cookies" required>
+        </div>
+
+        <input type="submit" value="Add New Store">
+
+      </fieldset>
+    </form>
 
     <script type="text/javascript" src="sales.js"></script>
   </body>
